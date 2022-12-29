@@ -17,15 +17,23 @@
 
     </header>
     <div class="container-fluid bg-secondary text-dark p-3">
-        <div class="d-flex align-items-center">
-
-            <h2>Current city:</h2>
-            <!-- put search bar in here -->
-            <input type="text" class="ms-auto" id="city-input" placeholder="Search City" />
+        <div class="d-flex flex-row">
+            <div class="col-6 d-flex ps-5 justify-content-start align-items-center">
+                <h2 id="current-city">Current city:</h2>
+            </div>
+            <div class="col-6 d-flex pe-5 justify-content-end">
+                <!-- put search bar in here -->
+                <nav class="navbar navbar-light bg-faded">
+                    <form class="form-inline">
+                        <input class="form-control mr-sm-2" type="text" placeholder="Search">
+                        <button type="button" class="btn btn-primary btn-sm">Search</button>
+                    </form>
+                </nav>
+            </div>
         </div>
     </div>
 
-    <main class="container-fluid p-3 mb-2 bg-info text-white">
+    <!-- <main class="container-fluid p-3 mb-2 bg-info text-white"> -->
         <div class="row"></div>
         <!-- today in larger box -->
         <!-- next four days -->
