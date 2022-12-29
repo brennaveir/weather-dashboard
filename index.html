@@ -33,22 +33,42 @@
         </div>
     </div>
 
-    <main class="container-fluid bg-info text-white">
+    <main class="container-fluid bg-info text-white p-3">
         <div class="d-flex flex-row">
-        <div class="col-12 d-flex">
-            
-        <div class="col-9 d-flex"> 
-            <!-- today in larger box -->
-            <div class="col-6 bg-light text-dark">Today's weather</div>
-            <!-- next four days -->
-          
+            <div class="col-12 d-flex">
+                <div class="container-fluid bg-dark text-light p-3">
+                   
+                    <div class="col-9 d-flex p-3 m-2">
+                        
+                        <!-- today in larger box -->
+                        <div class="col-12 bg-light text-dark p-5 m-2 today">Today's weather</div>
+                        <!-- next four days -->
+                    <div class="col-4 bg-danger text-dark m-2">list</div> 
+                    <!-- side bar with saved cities -->
+                    <ul id="cities">
+                        <!-- list of saved cities  -->
+                    </ul>
+                </div>
+                    
+                    <div class="col-9 d-flex">
+                        <div class="col-12 bg-primary text-light p-3 day-1">Day 1</div>
+                    </div>
+                    <div class="col-9 d-flex">
+                        <div class="col-12 bg-light text-dark p-3 day-2">Day 2</div>
+                    </div>
+                    <div class="col-9 d-flex">
+                        <div class="col-12 bg-primary text-light p-3 day-3">Day 3</div>
+                    </div>
+                    <div class="col-9 d-flex">
+                        <div class="col-12 bg-light text-dark p-3 day-4">Day 4</div>
+                    </div>
+                    <div class="col-9 d-flex">
+                        <div class="col-12 bg-primary text-light p-3 day-5">Day 5</div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-        <!-- side bar with saved cities -->
-        <ul id="sortable">
-            <!-- list of saved cities  -->
-        </ul>
+
 
     </main>
 
