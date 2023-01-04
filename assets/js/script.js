@@ -14,6 +14,7 @@ var wind;
 var temp;
 var humidity;
 var date;
+var icon;
 var cityList = document.getElementById("cities")
 
 var searchBtn = document.getElementById("search-btn")
@@ -51,27 +52,31 @@ function searchWeather() {
             return response.json();
         })
         .then(function (data) {
-            // console.log(data);
+            console.log(data);
             for (var i = 0; i < data.list.length; i++) {
                 if (i % 8 == 0) {
                     day = data.list[i].dt_txt
                     wind = data.list[i].wind.speed;
-                    temp = data.list[i].main.temp
-                    humidity = data.list[i].main.humidity
-                    console.log(data.list[i])
-                    displayWeather()
+                    temp = data.list[i].main.temp;
+                    humidity = data.list[i].main.humidity;
+                    icon =  data.list[i].weather[0].icon;
+                    // console.log(icon)
+                    formatWeather()
                 }
             }
         })
 }
 
-function displayWeather() {
+function formatWeather() {
 
     temp = Math.round(temp - 273.15) * 9 / 5 + 32 + " degrees F";
     day = dayjs(day).format('M-D-YYYY');
     humidity = humidity + "%";
     wind = wind + " MPH";
-    console.log(day, wind, temp, humidity)
+    var iconURL = `http://openweathermap.org/img/w/${icon}4x.png`
+
+
+    // console.log(day, wind, temp, humidity, icon)
 }
 
 
