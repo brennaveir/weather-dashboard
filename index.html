@@ -25,8 +25,8 @@
                 <!-- put search bar in here -->
                 <nav class="navbar navbar-light bg-faded">
                     <form class="form-inline">
-                        <input class="form-control mr-sm-2 search-city" type="text" placeholder="Search">
-                        <button type="button" class="btn btn-primary btn-sm" id="searchbtn">Search</button>
+                        <input class="form-control mr-sm-2" id="cityInput" type="text" placeholder="Search">
+                        <button type="button" class="btn btn-primary btn-sm" id="search-btn">Search</button>
                     </form>
                 </nav>
             </div>
@@ -37,30 +37,32 @@
         <div class="d-flex flex-row">
             <div class="col-12 d-flex">
                 <div class="container-fluid bg-dark text-light p-3">
-                   
+
                     <div class="col-9 d-flex p-3 m-2">
-                        
+
                         <!-- today in larger box -->
                         <div class="col-12 bg-light text-dark p-5 m-2 today">Today's weather</div>
                         <!-- next four days -->
-                    <div class="col-4 bg-danger text-dark m-2">list</div> 
-                    <!-- side bar with saved cities -->
-                    <ul id="cities">
-                        <!-- list of saved cities  -->
-                    </ul>
-                </div>
-                    
+                        <div class="col-4 bg-danger text-dark m-2">list
+                            <!-- side bar with saved cities -->
+                            <ul id="cities">
+                                <!-- list of saved cities  -->
+
+                            </ul>
+                        </div>
+                    </div>
+
                     <div class="col-9 d-flex">
-                        <div id = "day-1" class="col-12 bg-primary text-light p-3 ">Day 1</div>
+                        <div id="day-1" class="col-12 bg-primary text-light p-3 ">Day 1</div>
                     </div>
                     <div class="col-9 d-flex">
                         <div id="day-2" class="col-12 bg-light text-dark p-3">Day 2</div>
                     </div>
                     <div class="col-9 d-flex">
-                        <div id= "day-3" class="col-12 bg-primary text-light p-3">Day 3</div>
+                        <div id="day-3" class="col-12 bg-primary text-light p-3">Day 3</div>
                     </div>
                     <div class="col-9 d-flex">
-                        <div id="day-4"class="col-12 bg-light text-dark p-3">Day 4</div>
+                        <div id="day-4" class="col-12 bg-light text-dark p-3">Day 4</div>
                     </div>
                     <div class="col-9 d-flex">
                         <div id="day-5" class="col-12 bg-primary text-light p-3">Day 5</div>

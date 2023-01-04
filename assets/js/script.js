@@ -5,31 +5,56 @@
 //THEN I am presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, and the wind speed
 //WHEN I view future weather conditions for that city
 //THEN I am presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, the wind speed, and the humidity
+//💨🌞🌡☔❄⚡🌩🌨🌧🌦🌥🌤⛈⛅☁🌫🌛
 //WHEN I click on a city in the search history
 //THEN I am again presented with current and future conditions for that city
 var long;
 var lat;
-var requestUrl = "https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&appid=248ba8680dc03595a2d2c1b9765a1bdb"
-var searchBtn = document.getElementById("searchBtn")
 
+var cityList = document.getElementById("cities")
 
-function getWeather() {
+var searchBtn = document.getElementById("search-btn")
 
+function getLatAndLong() {
+    var inputVal = document.getElementById('cityInput').value
+    var searchCity = `http://api.openweathermap.org/geo/1.0/direct?q=${inputVal}&appid=248ba8680dc03595a2d2c1b9765a1bdb`
+   
+    var cityItems = document.createElement("li");
+          cityItems.textContent = inputVal;
+          cityList.appendChild(cityItems)
+   
+   
+   
+    fetch(searchCity)
+
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (data) {
+            long = data[0].lon
+            lat = data[0].lat
+            searchWeather();
+          });
+
+          
 }
 
+function searchWeather () {
+    var longAndLatURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${long}&appid=248ba8680dc03595a2d2c1b9765a1bdb`
 
-var successCallback = (position) => {
-    if (successCallback) {
-        long = position.coords.longitude;
-        lat = position.coords.latitude
-    };
-    console.log(requestUrl)
+    fetch(longAndLatURL) 
+
+    .then(function(response) {
+        return response.json();
+    })
+    .then(function (data) {
+        console.log(data);
+    })
 }
-var errorCallback = (error) => {
-    console.log(error);
-};
+searchBtn.addEventListener('click', getLatAndLong)
 
-navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
 
-searchBtn.addEventListener('click', searchWeather)
+
+
+
 
