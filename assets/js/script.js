@@ -10,7 +10,10 @@
 //THEN I am again presented with current and future conditions for that city
 var long;
 var lat;
-
+var wind;
+var temp;
+var humidity;
+var date;
 var cityList = document.getElementById("cities")
 
 var searchBtn = document.getElementById("search-btn")
@@ -18,13 +21,13 @@ var searchBtn = document.getElementById("search-btn")
 function getLatAndLong() {
     var inputVal = document.getElementById('cityInput').value
     var searchCity = `http://api.openweathermap.org/geo/1.0/direct?q=${inputVal}&appid=248ba8680dc03595a2d2c1b9765a1bdb`
-   
+
     var cityItems = document.createElement("li");
-          cityItems.textContent = inputVal;
-          cityList.appendChild(cityItems)
-   
-   
-   
+    cityItems.textContent = inputVal;
+    cityList.appendChild(cityItems)
+
+
+
     fetch(searchCity)
 
         .then(function (response) {
@@ -34,23 +37,44 @@ function getLatAndLong() {
             long = data[0].lon
             lat = data[0].lat
             searchWeather();
-          });
+        });
 
-          
+
 }
 
-function searchWeather () {
+function searchWeather() {
     var longAndLatURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${long}&appid=248ba8680dc03595a2d2c1b9765a1bdb`
 
-    fetch(longAndLatURL) 
+    fetch(longAndLatURL)
 
-    .then(function(response) {
-        return response.json();
-    })
-    .then(function (data) {
-        console.log(data);
-    })
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (data) {
+            // console.log(data);
+            for (var i = 0; i < data.list.length; i++) {
+                if (i % 8 == 0) {
+                    day = data.list[i].dt_txt
+                    wind = data.list[i].wind.speed;
+                    temp = data.list[i].main.temp
+                    humidity = data.list[i].main.humidity
+                    console.log(data.list[i])
+                    displayWeather()
+                }
+            }
+        })
 }
+
+function displayWeather() {
+
+    temp = Math.round(temp - 273.15) * 9 / 5 + 32 + " degrees F";
+    day = dayjs(day).format('M-D-YYYY');
+    humidity = humidity + "%";
+    wind = wind + " MPH";
+    console.log(day, wind, temp, humidity)
+}
+
+
 searchBtn.addEventListener('click', getLatAndLong)
 
 
