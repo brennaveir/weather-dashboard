@@ -19,7 +19,8 @@ var cityList = []
 var cityListEl = document.getElementById("cities")
 var searchBtn = document.getElementById("search-btn")
 var iconEl = document.querySelector('#weather-icon')
-
+var todayEl = document.getElementById('today')
+ 
 
 
 
@@ -53,53 +54,52 @@ function getLatAndLong() {
 
 function searchWeather() {
     var longAndLatURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${long}&appid=248ba8680dc03595a2d2c1b9765a1bdb`
-    var saveWeatherArr = []
+   var saveWeatherArr2 = []
+   
     fetch(longAndLatURL)
 
         .then(function (response) {
             return response.json();
         })
         .then(function (data) {
-            // console.log(data);
+            console.log(data);
+            var name = data.city.name
             for (var i = 0; i < data.list.length; i++) {
                 if (i % 8 == 0) {
 
-                    var saveWeatherObj = {
-                        date: data.list[i].dt_txt,
-                        wind: data.list[i].wind.speed,
-                        temp: data.list[i].main.temp,
-                        humidity: data.list[i].main.humidity,
-                        icon: data.list[i].weather[0].icon
-                    }
+                    saveWeatherArr1 = [
+                        name,
+                        date = dayjs(data.list[i].dt_txt).format('dddd M-D-YYYY'),
+                        wind = data.list[i].wind.speed + " MPH",
+                        temp = Math.round(data.list[i].main.temp- 273.15) * 9 / 5 + 32 + " degrees F",
+                        humidity = data.list[i].main.humidity + "%",
+                        icon = data.list[i].weather[0].icon
+                    ]
 
-                    saveWeatherArr.push(saveWeatherObj)
+                    saveWeatherArr2.push(saveWeatherArr1)
+                    
                 }
             }
-            console.log(saveWeatherArr)
-            formatWeather()
+            
+        
+              displayWeather(saveWeatherArr2)
         })
 
 }
 
 
 
-function formatWeather() {
-
-
-
-    temp = Math.round(temp - 273.15) * 9 / 5 + 32 + " degrees F";
-    date = dayjs(date).format('dddd M-D-YYYY');
-    humidity = humidity + "%";
-    wind = wind + " MPH";
 
 
 
 
-}
-
-function displayWeather() {
+function displayWeather(saveWeatherArr2) {
+    console.log(saveWeatherArr2)
     var iconUrl = `http://openweathermap.org/img/wn/${icon}@2x.png`
     iconEl.setAttribute('src', iconUrl)
+        var today = document.createElement('h3')
+            today.textContent = saveWeatherArr2[0][0];
+            todayEl.appendChild(today)
 }
 
 $(document).ready(function () {
@@ -107,10 +107,4 @@ $(document).ready(function () {
     cityListEl.textContent = getStoredCities
     searchBtn.addEventListener('click', getLatAndLong)
 })
-
-
-
-
-
-
 
