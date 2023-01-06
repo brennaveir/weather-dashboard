@@ -8,11 +8,15 @@
 #day-3,
 #day-4,
 #day-5 {
-    min-height: 15vh;
-    max-height: 15vh
+    min-height: 19vh;
+    max-height: 19vh
 }
 
 #city-list {
     min-height: 100vh;
     max-height: 100vh;
+}
+
+li {
+    list-style: none;
 }
