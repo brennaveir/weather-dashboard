@@ -27,7 +27,7 @@ var todayEl = document.getElementById('today')
 
 function getLatAndLong() {
     
-    var inputVal = document.getElementById('cityInput').value;
+    var inputVal = document.getElementById('city-input').value;
     var searchCity = `http://api.openweathermap.org/geo/1.0/direct?q=${inputVal}&appid=248ba8680dc03595a2d2c1b9765a1bdb`;
     cityList.push(inputVal);
     localStorage.setItem('inputVal', JSON.stringify(cityList));
