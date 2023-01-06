@@ -16,7 +16,7 @@ var humidity;
 var date;
 var icon;
 var cityList = []
-var cityListEl = document.getElementById("cities")
+var cityListEl = document.getElementById("city-list")
 var searchBtn = document.getElementById("search-btn")
 var iconEl = document.querySelector('#weather-icon')
 var todayEl = document.getElementById('today')
@@ -26,11 +26,11 @@ var todayEl = document.getElementById('today')
 
 
 function getLatAndLong() {
-    var inputVal = document.getElementById('cityInput').value
-    var searchCity = `http://api.openweathermap.org/geo/1.0/direct?q=${inputVal}&appid=248ba8680dc03595a2d2c1b9765a1bdb`
-
-    cityList.push(inputVal)
-    localStorage.setItem('inputVal', JSON.stringify(cityList))
+    
+    var inputVal = document.getElementById('cityInput').value;
+    var searchCity = `http://api.openweathermap.org/geo/1.0/direct?q=${inputVal}&appid=248ba8680dc03595a2d2c1b9765a1bdb`;
+    cityList.push(inputVal);
+    localStorage.setItem('inputVal', JSON.stringify(cityList));
 
     var cityItems = document.createElement("li");
     cityItems.textContent = inputVal;
@@ -86,12 +86,6 @@ function searchWeather() {
         })
 
 }
-
-
-
-
-
-
 
 function displayWeather(saveWeatherArr2) {
     console.log(saveWeatherArr2)

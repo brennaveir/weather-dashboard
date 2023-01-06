@@ -1,17 +1,18 @@
-#cities {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    width: 60%;
-  }
-  #cities li {
-    margin: 0 3px 3px 3px;
-    padding: 0.4em;
-    padding-left: 1.5em;
-    font-size: 1.4em;
-    height: 18px;
-  }
-  #cities li span {
-    position: absolute;
-    margin-left: -1.3em;
-  }
+#today {
+    min-height: 25vh;
+    max-height: 25vh;
+}
+
+#tomorrow,
+#day-2,
+#day-3,
+#day-4,
+#day-5 {
+    min-height: 15vh;
+    max-height: 15vh
+}
+
+#city-list {
+    min-height: 100vh;
+    max-height: 100vh;
+}
