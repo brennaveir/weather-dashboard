@@ -1,6 +1,23 @@
+.title {
+    font-size:3rem;
+}
+
+
+#subtitle {
+    min-height:15vh;
+}
+
+#current-city {
+    font-size: 35px;
+    padding-left: 10px;
+    font-weight: bold;
+}
+
 #today {
     min-height: 25vh;
     max-height: 25vh;
+    font-size: 30px
+    
 }
 
 #tomorrow,
@@ -9,14 +26,20 @@
 #day-4,
 #day-5 {
     min-height: 19vh;
-    max-height: 19vh
+    max-height: 19vh;
+    font-size:30px;
 }
 
 #city-list {
     min-height: 100vh;
     max-height: 100vh;
+    display:flex;
+    flex-direction: column;
 }
 
-li {
-    list-style: none;
+
+h3 {
+    font-weight:bold;
+    
 }
+

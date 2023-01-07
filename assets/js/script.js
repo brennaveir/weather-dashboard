@@ -18,15 +18,19 @@ var icon;
 var cityList = []
 var cityListEl = document.getElementById("city-list")
 var searchBtn = document.getElementById("search-btn")
-var iconEl = document.querySelector('#weather-icon')
+// var iconEl = document.querySelector('#weather-icon')
 var todayEl = document.getElementById('today')
-var inputBox = document.querySelector('.input')
 var inputVal = document.getElementById('city-input').value
+var currentCity = document.getElementById('current-city')
+var todayDate = document.getElementById('today-date')
+var todayIcon = document.getElementById('today-icon')
+var todayTemp = document.getElementById('today-temp')
 
 
 
 
 function getLatAndLong() {
+ 
     var inputVal = document.getElementById('city-input').value;
     var searchCity = `http://api.openweathermap.org/geo/1.0/direct?q=${inputVal}&appid=248ba8680dc03595a2d2c1b9765a1bdb`;
 
@@ -43,17 +47,23 @@ function getLatAndLong() {
 
 
   function createList (inputVal) {
-    
+    var currentCityText = document.getElementById('current-city')
+    currentCityText.textContent = inputVal;
+    cityList.push(inputVal);  
+    localStorage.setItem('cityList', JSON.stringify(cityList))
+
     
     if (cityList.includes(inputVal)) {
         searchWeather()
     }   
     else {
-    cityList.push(inputVal);
-
+    
+        
+        
     document.getElementById('city-input').value = "";
-    var cityItems = document.createElement("li");
+    var cityItems = document.createElement("a");
     cityItems.textContent = inputVal;
+    cityItems.classList.add("button");
     cityListEl.appendChild(cityItems)
     searchWeather ()
   }
@@ -78,7 +88,7 @@ function searchWeather() {
             return response.json();
         })
         .then(function (data) {
-            // console.log(data);
+            console.log(data);
             var name = data.city.name
             for (var i = 0; i < data.list.length; i++) {
                 if (i % 8 == 0) {
@@ -98,23 +108,42 @@ function searchWeather() {
             }
 
 
-            // displayWeather(saveWeatherArr2)
+            displayWeather(saveWeatherArr2)
         })
 
 }
 
-// function displayWeather(saveWeatherArr2) {
-//     console.log(saveWeatherArr2)
-//     var iconUrl = `http://openweathermap.org/img/wn/${icon}@2x.png`
-//     iconEl.setAttribute('src', iconUrl)
-//     var today = document.createElement('h3')
-//     today.textContent = saveWeatherArr2[0][0];
-//     todayEl.appendChild(today)
-// }
+function displayWeather(saveWeatherArr2) {
+    console.log(saveWeatherArr2)
+    
+    var iconUrl = `http://openweathermap.org/img/wn/${icon}@2x.png`
+    // iconEl.setAttribute('src', iconUrl)
+   
+    // for (let i = 0; i < saveWeatherArr2.length; i++) {
+    //     todayTemp.textContent = saveWeatherArr2[0][i]
+    // }
+
+    todayDate.textContent = saveWeatherArr2[0][1];
+   todayIcon.setAttribute('src', iconUrl) 
+   todayTemp.textContent = (saveWeatherArr2[0][3], saveWeatherArr2[0][2], saveWeatherArr2[0][4])
+}
 
 $(document).ready(function () {
-    var getStoredCities = JSON.parse(localStorage.getItem("cityList"))
-    cityListEl.textContent = getStoredCities
+    var getStoredCities = JSON.parse(localStorage.getItem("cityList")); 
+    if (getStoredCities != null) {
+        for (var i = 0; i < getStoredCities.length; i++) {
+            var cityItems = document.createElement("a");
+            cityItems.textContent = getStoredCities[i];
+            cityItems.classList.add("button");
+            cityListEl.appendChild(cityItems)  
+        }
+        
+    }
+    
+    // cityListEl.textContent = getStoredCities
     searchBtn.addEventListener('click', getLatAndLong)
+    
+    //if city list has cities in it, search
+    // cityItems.addEventListener('click', changeCity)
 })
 
