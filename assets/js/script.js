@@ -24,7 +24,7 @@ var inputVal = document.getElementById('city-input').value
 var currentCity = document.getElementById('current-city')
 var todayDate = document.getElementById('today-date')
 var todayIcon = document.getElementById('today-icon')
-var todayTemp = document.getElementById('today-temp')
+var todayData = document.getElementById('today-data')
 
 
 
@@ -125,7 +125,7 @@ function displayWeather(saveWeatherArr2) {
 
     todayDate.textContent = saveWeatherArr2[0][1];
    todayIcon.setAttribute('src', iconUrl) 
-   todayTemp.textContent = (saveWeatherArr2[0][3], saveWeatherArr2[0][2], saveWeatherArr2[0][4])
+   todayData.textContent = ("Temperature: " + saveWeatherArr2[0][3] + " Wind: " + saveWeatherArr2[0][2] + " Humidity: " + saveWeatherArr2[0][4])
 }
 
 $(document).ready(function () {
