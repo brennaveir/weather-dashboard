@@ -49,8 +49,7 @@ function getLatAndLong() {
   function createList (inputVal) {
     var currentCityText = document.getElementById('current-city')
     currentCityText.textContent = inputVal;
-    cityList.push(inputVal);  
-    localStorage.setItem('cityList', JSON.stringify(cityList))
+ 
 
     
     if (cityList.includes(inputVal)) {
@@ -58,7 +57,8 @@ function getLatAndLong() {
     }   
     else {
     
-        
+         cityList.push(inputVal);  
+    localStorage.setItem('cityList', JSON.stringify(cityList))  
         
     document.getElementById('city-input').value = "";
     var cityItems = document.createElement("a");
@@ -129,7 +129,7 @@ function displayWeather(saveWeatherArr2) {
 }
 
 $(document).ready(function () {
-    var getStoredCities = JSON.parse(localStorage.getItem("cityList")); 
+    var getStoredCities = JSON.parse(localStorage.getItem("cityList")) || []; 
     if (getStoredCities != null) {
         for (var i = 0; i < getStoredCities.length; i++) {
             var cityItems = document.createElement("a");
