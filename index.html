@@ -51,29 +51,71 @@
     </div>
     <div class="container is-fluid has-background-primary-dark p-3 is-flex-direction-column">
         <div class="columns is-multiline">
-            <div class="column is-8">
+            <div class="column is-8" id="weather-container">
                 <div class="bd-notification has-background-primary-light" id="today">
-                    <div class="container">
-                        <h3>Today</h3>
-                        <h4 id="today-date"></h4>
-                        <img id="today-icon" src="">
-                        <h4 id="today-data"></h4>
+                    <!-- <div class="container" id="today"> -->
 
+                    <div>
+                        <h4 id="today-date"></h4>
                     </div>
+                    <div>
+                        <img id="today-icon" src=""></div>
+                    <div>
+                        <!-- <strong>Temperature</strong> -->
+                        <h4 id="today-temp"></h4>
+                    </div>
+                    <div>
+                        <!-- <strong>Humidity</strong> -->
+                        <h4 id="today-humidity"></h4>
+                    </div>
+                    <div>
+                        <!-- <strong>Wind</strong> -->
+                        <h4 id="today-wind"></h4>
+                    </div>
+
                 </div>
+                <!-- </div> -->
                 <div class="bd-notification has-background-link-light" id="tomorrow">
                     <p>
-                    <h3>Tomorrow</h3>
+                    <h3 id="tomorrow-date"></h3>
+                    <img id="tomorrow-icon" src="">
+                    <h4 id="tomorrow-temp"></h4>
+                    <h4 id="tomorrow-humidity"></h4>
+                    <h4 id="tomorrow-wind"></h4>
                     </p>
+
+
                 </div>
                 <div class="bd-notification has-background-primary-light" id="day-3">
-                    <p>Day 3</p>
+                    <p>
+                    <h3 id="day-3-date"></h3>
+                    <img id="day-3-icon" src="">
+                    <h4 id="day-3-temp"></h4>
+                    <h4 id="day-3-humidity"></h4>
+                    <h4 id="day-3-wind"></h4>
+
+                    </p>
                 </div>
                 <div class="bd-notification has-background-link-light" id="day-4">
-                    <p>Day 4</p>
+
+                    <p>
+                        <h3 id="day-4-date"></h3>
+                        <img id="day-4-icon" src="">
+                        <h4 id="day-4-temp"></h4>
+                        <h4 id="day-4-humidity"></h4>
+                        <h4 id="day-4-wind"></h4>
+                    </p>
+
                 </div>
                 <div class="bd-notification has-background-primary-light" id="day-5">
-                    <p>Day 5</p>
+                    <p>
+                    <h3 id="day-5-date"></h3>
+                    <img id="day-5-icon" src="">
+                    <h4 id="day-5-temp"></h4>
+                    <h4 id="day-5-humidity"></h4>
+                    <h4 id="day-5-wind"></h4>
+
+                    </p>
                 </div>
             </div>
 
@@ -82,6 +124,16 @@
             </div>
         </div>
     </div>
+    <footer class="footer has-background-primary">
+        <div class="content has-text-centered">
+            <p>
+                <strong>Weather brought to you by </strong>
+            <div>
+                <a href="https://openweathermap.org/"><img src="./assets/images/open-weather-logo.png"></a>
+            </div>
+            </p>
+        </div>
+    </footer>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="./assets/js/script.js"></script>
 </body>

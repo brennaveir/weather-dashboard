@@ -14,8 +14,13 @@
 }
 
 #today {
-    min-height: 25vh;
-    max-height: 25vh;
+    display:flex;
+    flex-direction: column;
+    flex-wrap:wrap;
+    justify-content: space-around;
+    align-items:center;
+    min-height: 40vh;
+    max-height: 40vh;
     font-size: 30px
     
 }
@@ -25,9 +30,12 @@
 #day-3,
 #day-4,
 #day-5 {
-    min-height: 19vh;
-    max-height: 19vh;
-    font-size:30px;
+    min-height: 15vh;
+    max-height: 15vh;
+    font-size:20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
 
 #city-list {
@@ -41,5 +49,22 @@
 h3 {
     font-weight:bold;
     
+}
+
+footer {
+    display:flex;
+    justify-content: space-around;
+    max-height:15vh;
+}
+
+footer img {
+    max-width: 25%;
+    
+}
+
+.city-btn {
+    font-size: 30px;
+    box-shadow: 5px 5px;
+    margin:5px;
 }
 
