@@ -40,8 +40,8 @@
 }
 
 #city-list {
-    min-height: 100vh;
-    max-height: 100vh;
+    min-height: 112vh;
+    max-height: 112vh;
     display:flex;
     flex-direction: column;
 }
