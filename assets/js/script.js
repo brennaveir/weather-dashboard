@@ -48,24 +48,30 @@ var dayFiveIcon = document.getElementById('day-5-icon')
 var dayFiveTemp = document.getElementById('day-5-temp')
 var dayFiveHumidity = document.getElementById('day-5-humidity')
 var dayFiveWind = document.getElementById('day-5-wind')
+var days = [
+    { date: todayDate, icon: todayIcon, temp: todayTemp, wind: todayWind, humidity: todayHumidity },
+    { date: tomorrowDate, icon: tomorrowIcon, temp: tomorrowTemp, wind: tomorrowWind, humidity: tomorrowHumidity },
+    { date: dayThreeDate, icon: dayThreeIcon, temp: dayThreeTemp, wind: dayThreeWind, humidity: dayThreeHumidity },
+    { date: dayFourDate, icon: dayFourIcon, temp: dayFourTemp, wind: dayFourWind, humidity: dayFourHumidity },
+    { date: dayFiveDate, icon: dayFiveIcon, temp: dayFiveTemp, wind: dayFiveWind, humidity: dayFiveHumidity }
+]
 
+// function changeCity() {
+//     var cityBtnVal = cityButtons.value
+//     console.log(cityBtnVal)
+//     var searchChangedCity = `http://api.openweathermap.org/geo/1.0/direct?q=${cityBtnVal}&appid=248ba8680dc03595a2d2c1b9765a1bdb`;
 
-function changeCity() {
-    var cityBtnVal = cityButtons.value
-    console.log(cityBtnVal)
-    var searchChangedCity = `http://api.openweathermap.org/geo/1.0/direct?q=${cityBtnVal}&appid=248ba8680dc03595a2d2c1b9765a1bdb`;
+//     fetch(searchChangedCity)
 
-    fetch(searchChangedCity)
-
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (data) {
-            long = data[0].lon
-            lat = data[0].lat
-            searchWeather();
-        });
-}
+//         .then(function (response) {
+//             return response.json();
+//         })
+//         .then(function (data) {
+//             long = data[0].lon
+//             lat = data[0].lat
+//             searchWeather();
+//         });
+// }
 
 
 function getLatAndLong() {
@@ -118,6 +124,7 @@ function getLatAndLong() {
 }
 
 function searchWeather() {
+
     var longAndLatURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${long}&appid=248ba8680dc03595a2d2c1b9765a1bdb`
     var saveWeatherArr2 = []
 
@@ -153,50 +160,17 @@ function searchWeather() {
 }
 
 function displayWeather(saveWeatherArr2) {
-    console.log(saveWeatherArr2)
-    icon = saveWeatherArr2[0][5]
-    var iconUrl = `http://openweathermap.org/img/wn/${icon}@2x.png`
-    // iconEl.setAttribute('src', iconUrl)
-    todayDate.textContent =  saveWeatherArr2[0][1];
-    todayIcon.setAttribute('src', iconUrl)
-    todayTemp.textContent = "Temperature: " + saveWeatherArr2[0][3];
-    todayWind.textContent = "Wind: " + saveWeatherArr2[0][2];
-    todayHumidity.textContent = "Humidity: " + saveWeatherArr2[0][4];
+    function updateWeather(day, data) {
+        day.date.textContent = data[1];
+        day.icon.setAttribute('src', `http://openweathermap.org/img/wn/${data[5]}@2x.png`);
+        day.temp.textContent = "🌡" + data[3];
+        day.wind.textContent = "💦" + data[2];
+        day.humidity.textContent = "💨" + data[4];
+    }
 
-    icon = saveWeatherArr2[1][5]
-    iconUrl = `http://openweathermap.org/img/wn/${icon}@2x.png`
-    tomorrowDate.textContent = saveWeatherArr2[1][1] ;
-    tomorrowIcon.setAttribute('src', iconUrl)
-    tomorrowTemp.textContent = "🌡" + saveWeatherArr2[1][3];
-    tomorrowWind.textContent = "💦" + saveWeatherArr2[1][2];
-    tomorrowHumidity.textContent = "💨" + saveWeatherArr2[1][4];
-
-    icon = saveWeatherArr2[2][5]
-    iconUrl = `http://openweathermap.org/img/wn/${icon}@2x.png`
-    dayThreeDate.textContent = saveWeatherArr2[2][1];
-    dayThreeIcon.setAttribute('src', iconUrl)
-    dayThreeTemp.textContent = "🌡" + saveWeatherArr2[2][3];
-    dayThreeWind.textContent = "💦" + saveWeatherArr2[2][2];
-    dayThreeHumidity.textContent = "💨" + saveWeatherArr2[2][4];
-
-    icon = saveWeatherArr2[3][5]
-    iconUrl = `http://openweathermap.org/img/wn/${icon}@2x.png`
-    dayFourDate.textContent = saveWeatherArr2[3][1];
-    dayFourIcon.setAttribute('src', iconUrl)
-    dayFourTemp.textContent = "🌡" + saveWeatherArr2[3][3];
-    dayFourWind.textContent = "💦" + saveWeatherArr2[3][2];
-    dayFourHumidity.textContent = "💨" + saveWeatherArr2[3][4];
-
-    icon = saveWeatherArr2[4][5]
-    iconUrl = `http://openweathermap.org/img/wn/${icon}@2x.png`
-    dayFiveDate.textContent = saveWeatherArr2[4][1];
-    dayFiveIcon.setAttribute('src', iconUrl)
-    dayFiveTemp.textContent = "🌡" + saveWeatherArr2[4][3];
-    dayFiveWind.textContent = "💦" + saveWeatherArr2[4][2];
-    dayFiveHumidity.textContent = "💨" + saveWeatherArr2[4][4];
-
-
-
+    for (let i = 0; i < saveWeatherArr2.length; i++) {
+        updateWeather(days[i], saveWeatherArr2[i]);
+    }
 }
 
 $(document).ready(function () {
@@ -207,25 +181,9 @@ $(document).ready(function () {
             cityItems.textContent = getStoredCities[i];
             cityItems.classList.add("city-btn");
             cityListEl.appendChild(cityItems)
+
         }
 
     }
-
-    // cityListEl.textContent = getStoredCities
     searchBtn.addEventListener('click', getLatAndLong)
-
-    //if city list has cities in it, search
-    //    cityBtn.addEventListener('click', changeCity)
-    // var cityButtons = document.getElementsByClassName('city-btn').innerHTML
-    //  for (var i = 0; i < cityButtons.length; i++) {
-    //     cityButtons[i].addEventListener('click', changeCity(cityButtons))
-    // console.log(cityButtons)
-    //  }
-
-
-
-    // cityButtons.addEventListener('click', changeCity)
-
-
-
 })
