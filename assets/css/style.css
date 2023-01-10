@@ -1,10 +1,10 @@
 .title {
-    font-size:3rem;
+    font-size: 3rem;
 }
 
 
 #subtitle {
-    min-height:15vh;
+    min-height: 15vh;
 }
 
 #current-city {
@@ -14,31 +14,31 @@
 }
 
 #main-container {
-    visibility:hidden;
-    
+    visibility: hidden;
+
 }
+
 #today {
-    display:flex;
-    text-align:center;
+    display: flex;
+    text-align: center;
     flex-direction: column;
-    flex-wrap:wrap;
+    flex-wrap: wrap;
     justify-content: space-around;
-    align-items:center;
+    align-items: center;
     min-height: 52vh;
     max-height: 52vh;
     font-size: 30px
-    
 }
 
 #tomorrow,
 #day-2,
 #day-3,
 #day-4,
-#day-5, 
-#day-6{
+#day-5,
+#day-6 {
     min-height: 15vh;
     max-height: 15vh;
-    font-size:20px;
+    font-size: 20px;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -47,30 +47,29 @@
 #city-list {
     min-height: 127vh;
     max-height: 127vh;
-    display:flex;
+    display: flex;
     flex-direction: column;
 }
 
 
 h3 {
-    font-weight:bold;
-    
+    font-weight: bold;
+
 }
 
 footer {
-    display:flex;
+    display: flex;
     justify-content: space-around;
-    max-height:15vh;
+    max-height: 15vh;
 }
 
 footer img {
     max-width: 25%;
-    
+
 }
 
 .city-btn {
     font-size: 30px;
     box-shadow: 5px 5px;
-    margin:5px;
+    margin: 5px;
 }
-

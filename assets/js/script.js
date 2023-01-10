@@ -55,32 +55,8 @@ var daySix = {
     wind: document.getElementById('day-6-wind')
 }
 
-
-// function changeCity(buttonValue) {
-// var inputVal = buttonValue
-
-// getLatAndLong(inputVal)
-// }
-//     var searchCity = `https://api.openweathermap.org/data/2.5/weather?q=${buttonValue}&appid=248ba8680dc03595a2d2c1b9765a1bdb&units=imperial`;
-//     currentCity.textContent = buttonValue;
-//     fetch(searchCity)
-
-//         .then(function (response) {
-//             return response.json();
-//         })
-//         .then(function (data) {
-//             console.log(data)
-//             long = data.coord.lon
-//             lat = data.coord.lat
-//             // console.log(long, lat)
-//             todayWeather();
-//         });
-
-// }
-
-
 function createList() {
-    
+
     var inputVal = document.getElementById('city-input').value;
     currentCityText.textContent = inputVal;
 
@@ -102,7 +78,7 @@ function createList() {
 }
 
 function getLatAndLong(inputVal) {
-  var mainContainerEl = document.getElementById('main-container').style.visibility = "visible" 
+    var mainContainerEl = document.getElementById('main-container').style.visibility = "visible"
     var searchCity = `https://api.openweathermap.org/data/2.5/weather?q=${inputVal}&appid=248ba8680dc03595a2d2c1b9765a1bdb&units=imperial`;
 
     fetch(searchCity)
@@ -129,7 +105,6 @@ function getLatAndLong(inputVal) {
     }
 }
 
-
 function searchWeather() {
 
     var longAndLatURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${long}&appid=248ba8680dc03595a2d2c1b9765a1bdb`
@@ -155,15 +130,12 @@ function searchWeather() {
                         humidity = data.list[i].main.humidity + "%",
                         icon = data.list[i].weather[0].icon
                     ]
-
                     saveWeatherArr2.push(saveWeatherArr1)
                 }
             }
             fiveDay(saveWeatherArr2)
         })
-
 }
-
 
 function fiveDay(saveWeatherArr2) {
     var days = [
@@ -187,17 +159,17 @@ function displayFiveDay(day, data) {
     day.temp.textContent = "🌡" + data[3];
     day.wind.textContent = "💦" + data[4];
     day.humidity.textContent = "💨" + data[2];
-    
+
 }
 
 $(document).ready(function () {
-  document.querySelector('#city-list').addEventListener('click', function (event) {
-            if (event.target.matches('.city-btn')) {
-                var inputVal = event.target.textContent;
-                getLatAndLong(inputVal);
-            }
-        });   
-    
+    document.querySelector('#city-list').addEventListener('click', function (event) {
+        if (event.target.matches('.city-btn')) {
+            var inputVal = event.target.textContent;
+            getLatAndLong(inputVal);
+        }
+    });
+
     var getStoredCities = JSON.parse(localStorage.getItem("cityList"));
     if (getStoredCities) {
         cityList = getStoredCities;
@@ -206,10 +178,9 @@ $(document).ready(function () {
             cityItems.textContent = getStoredCities[i];
             cityItems.classList.add("city-btn");
             cityListEl.appendChild(cityItems)
-            var inputVal = getStoredCities[getStoredCities.length-1]
+            var inputVal = getStoredCities[getStoredCities.length - 1]
             getLatAndLong(inputVal)
         }
-       
     }
     searchBtn.addEventListener('click', createList)
 })
