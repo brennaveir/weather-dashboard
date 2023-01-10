@@ -199,6 +199,8 @@ $(document).ready(function () {
             cityItems.textContent = getStoredCities[i];
             cityItems.classList.add("city-btn");
             cityListEl.appendChild(cityItems)
+            var inputVal = getStoredCities[getStoredCities.length-1]
+            getLatAndLong(inputVal)
         }
         document.querySelector('#city-list').addEventListener('click', function (event) {
             if (event.target.matches('.city-btn')) {
