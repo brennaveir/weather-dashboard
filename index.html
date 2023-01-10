@@ -50,7 +50,7 @@
         </nav>
     </div>
     <div class="container is-fluid has-background-primary-dark p-3 is-flex-direction-column">
-        <div class="columns is-multiline">
+        <div class="columns is-multiline" id=main-container>
             <div class="column is-8" id="weather-container">
                 <div class="bd-notification has-background-primary-light" id="today">
                     <!-- <div class="container" id="today"> -->
@@ -59,14 +59,15 @@
                         <h4 id="today-date"></h4>
                     </div>
                     <div>
-                        <img id="today-icon" src=""></div>
+                        <img id="today-icon" src="">
+                    </div>
                     <div>
                         <strong>Temperature</strong>
-                       
+
                         <h4 id="today-temp"></h4>
                     </div>
                     <div>
-                      
+
                         <strong>Humidity</strong>
                         <h4 id="today-humidity"></h4>
                     </div>
@@ -101,11 +102,11 @@
                 <div class="bd-notification has-background-link-light" id="day-4">
 
                     <p>
-                        <h3 id="day-4-date"></h3>
-                        <img id="day-4-icon" src="">
-                        <h4 id="day-4-temp"></h4>
-                        <h4 id="day-4-humidity"></h4>
-                        <h4 id="day-4-wind"></h4>
+                    <h3 id="day-4-date"></h3>
+                    <img id="day-4-icon" src="">
+                    <h4 id="day-4-temp"></h4>
+                    <h4 id="day-4-humidity"></h4>
+                    <h4 id="day-4-wind"></h4>
                     </p>
 
                 </div>
@@ -119,12 +120,24 @@
 
                     </p>
                 </div>
+
+                <div class="bd-notification has-background-link-light" id="day-6">
+                    <p>
+                    <h3 id="day-6-date"></h3>
+                    <img id="day-6-icon" src="">
+                    <h4 id="day-6-temp"></h4>
+                    <h4 id="day-6-humidity"></h4>
+                    <h4 id="day-6-wind"></h4>
+
+                    </p>
+                </div>
             </div>
 
             <div class="column container is-fluid is-align-items-center">
                 <p class="bd-notification has-background-primary p-2" id="city-list"></p>
             </div>
         </div>
+    </div>
     </div>
     <footer class="footer has-background-primary">
         <div class="content has-text-centered">

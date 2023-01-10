@@ -1,13 +1,3 @@
-//GIVEN a weather dashboard with form inputs
-//WHEN I search for a city
-//THEN I am presented with current and future conditions for that city and that city is added to the search history
-//WHEN I view current weather conditions for that city
-//THEN I am presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, and the wind speed
-//WHEN I view future weather conditions for that city
-//THEN I am presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, the wind speed, and the humidity
-//💨🌞🌡☔❄⚡🌩🌨🌧🌦🌥🌤⛈⛅☁🌫🌛💦
-//WHEN I click on a city in the search history
-//THEN I am again presented with current and future conditions for that city
 var long;
 var lat;
 var wind;
@@ -57,10 +47,18 @@ var dayFive = {
     humidity: document.getElementById('day-5-humidity'),
     wind: document.getElementById('day-5-wind')
 }
+var daySix = {
+    date: document.getElementById('day-6-date'),
+    icon: document.getElementById('day-6-icon'),
+    temp: document.getElementById('day-6-temp'),
+    humidity: document.getElementById('day-6-humidity'),
+    wind: document.getElementById('day-6-wind')
+}
 
 
 function changeCity(buttonValue) {
-    var searchCity = `http://api.openweathermap.org/geo/1.0/direct?q=${buttonValue}&appid=248ba8680dc03595a2d2c1b9765a1bdb`;
+
+    var searchCity = `https://api.openweathermap.org/data/2.5/weather?q=${buttonValue}&appid=248ba8680dc03595a2d2c1b9765a1bdb&units=imperial`;
     currentCity.textContent = buttonValue;
     fetch(searchCity)
 
@@ -68,17 +66,40 @@ function changeCity(buttonValue) {
             return response.json();
         })
         .then(function (data) {
-            long = data[0].lon
-            lat = data[0].lat
-            searchWeather(long,lat);
+            // console.log(data)
+            long = data.coord.lon
+            lat = data.coord.lat
+            // console.log(long, lat)
+            todayWeather();
         });
 
 }
 
-function getLatAndLong() {
 
+function createList() {
+    var weatherContainerEl = document.getElementById('weather-container').style.visibility = "visible"
     var inputVal = document.getElementById('city-input').value;
-    var searchCity = `http://api.openweathermap.org/geo/1.0/direct?q=${inputVal}&appid=248ba8680dc03595a2d2c1b9765a1bdb`;
+    currentCityText.textContent = inputVal;
+
+    if (cityList.includes(inputVal)) {
+        document.getElementById('city-input').value = "";
+        getLatAndLong(inputVal)
+    }
+    else {
+        cityList.push(inputVal);
+        localStorage.setItem('cityList', JSON.stringify(cityList))
+
+        document.getElementById('city-input').value = "";
+        var cityItems = document.createElement("button");
+        cityItems.textContent = inputVal;
+        cityItems.classList.add("city-btn");
+        cityListEl.appendChild(cityItems)
+        getLatAndLong(inputVal)
+    }
+}
+
+function getLatAndLong(inputVal) {
+    var searchCity = `https://api.openweathermap.org/data/2.5/weather?q=${inputVal}&appid=248ba8680dc03595a2d2c1b9765a1bdb&units=imperial`;
 
     fetch(searchCity)
 
@@ -86,34 +107,26 @@ function getLatAndLong() {
             return response.json();
         })
         .then(function (data) {
-            long = data[0].lon
-            lat = data[0].lat
-            createList(inputVal);
+            console.log(data)
+            long = data.coord.lon
+            lat = data.coord.lat
+            todayWeather(data)
         });
 
-    function createList(inputVal) {
+    function todayWeather(data) {
+        today.date.textContent = dayjs(data.coord.dt).format('dddd M-D-YYYY');
+        todayIcon = data.weather[0].icon;
+        today.icon.setAttribute('src', `http://openweathermap.org/img/wn/${todayIcon}@2x.png`);
+        today.temp.textContent = "🌡" + data.main.temp;
+        today.wind.textContent = "💨" + data.wind.speed;
+        today.humidity.textContent = "💦" + data.main.humidity
+        searchWeather()
 
-        currentCityText.textContent = inputVal;
-
-        if (cityList.includes(inputVal)) {
-            document.getElementById('city-input').value = "";
-            searchWeather()
-        }
-        else {
-            cityList.push(inputVal);
-            localStorage.setItem('cityList', JSON.stringify(cityList))
-
-            document.getElementById('city-input').value = "";
-            var cityItems = document.createElement("button");
-            cityItems.textContent = inputVal;
-            cityItems.classList.add("city-btn");
-            cityListEl.appendChild(cityItems)
-            searchWeather()
-        }
     }
 }
 
-function searchWeather(long,lat) {
+
+function searchWeather() {
 
     var longAndLatURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${long}&appid=248ba8680dc03595a2d2c1b9765a1bdb`
     var saveWeatherArr2 = []
@@ -127,8 +140,8 @@ function searchWeather(long,lat) {
             console.log(data);
             var name = data.city.name;
             currentCity.textContent = name;
-            for (var i = 0; i < data.list.length; i++) {
-                if (i % 8 == 0) {
+            for (var i = 1; i < data.list.length; i++) {
+                if (i === 1 || i === 9 || i === 17 || i === 25 || i === 33) {
 
                     var saveWeatherArr1 = [
                         name,
@@ -142,26 +155,29 @@ function searchWeather(long,lat) {
                     saveWeatherArr2.push(saveWeatherArr1)
                 }
             }
-            displayWeather(saveWeatherArr2)
+            fiveDay(saveWeatherArr2)
         })
 
 }
 
-function displayWeather(saveWeatherArr2) {
+
+function fiveDay(saveWeatherArr2) {
     var days = [
-        { date: today.date, icon: today.icon, temp: today.temp, wind: today.wind, humidity: today.humidity },
+
         { date: tomorrow.date, icon: tomorrow.icon, temp: tomorrow.temp, wind: tomorrow.wind, humidity: tomorrow.humidity },
         { date: dayThree.date, icon: dayThree.icon, temp: dayThree.temp, wind: dayThree.wind, humidity: dayThree.humidity },
-        { date: dayFour.date, icon: dayFour.icon, temp: dayFour.temp, wind: dayFour.wind, humidity: dayFour.humidity},
-        { date: dayFive.date, icon: dayFive.icon, temp: dayFive.temp, wind: dayFive.wind, humidity: dayFive.humidity}
+        { date: dayFour.date, icon: dayFour.icon, temp: dayFour.temp, wind: dayFour.wind, humidity: dayFour.humidity },
+        { date: dayFive.date, icon: dayFive.icon, temp: dayFive.temp, wind: dayFive.wind, humidity: dayFive.humidity },
+        { date: daySix.date, icon: daySix.icon, temp: daySix.temp, wind: daySix.wind, humidity: daySix.humidity }
     ]
 
     for (let i = 0; i < saveWeatherArr2.length; i++) {
-        updateWeather(days[i], saveWeatherArr2[i]);
+        displayFiveDay(days[i], saveWeatherArr2[i]);
     }
 }
 
-function updateWeather(day, data) {
+function displayFiveDay(day, data) {
+    console.log(day, data)
     day.date.textContent = data[1];
     day.icon.setAttribute('src', `http://openweathermap.org/img/wn/${data[5]}@2x.png`);
     day.temp.textContent = "🌡" + data[3];
@@ -169,23 +185,7 @@ function updateWeather(day, data) {
     day.humidity.textContent = "💨" + data[2];
 }
 
-
 $(document).ready(function () {
-    const successCallback = (position) => {
-        console.log(position);
-        long = position.coords.longitude
-        lat = position.coords.latitude
-        
-        searchWeather(long,lat)
-      };
-      
-      const errorCallback = (error) => {
-        console.log(error);
-      };
-      
-      navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
-    
-    
     var getStoredCities = JSON.parse(localStorage.getItem("cityList"));
     if (getStoredCities) {
         cityList = getStoredCities;
@@ -202,5 +202,5 @@ $(document).ready(function () {
             }
         });
     }
-    searchBtn.addEventListener('click', getLatAndLong)
+    searchBtn.addEventListener('click', createList)
 })

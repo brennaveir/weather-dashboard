@@ -13,6 +13,10 @@
     font-weight: bold;
 }
 
+#weather-container {
+    visibility:hidden;
+    
+}
 #today {
     display:flex;
     text-align:center;
@@ -30,7 +34,8 @@
 #day-2,
 #day-3,
 #day-4,
-#day-5 {
+#day-5, 
+#day-6{
     min-height: 15vh;
     max-height: 15vh;
     font-size:20px;
@@ -40,8 +45,8 @@
 }
 
 #city-list {
-    min-height: 112vh;
-    max-height: 112vh;
+    min-height: 127vh;
+    max-height: 127vh;
     display:flex;
     flex-direction: column;
 }
