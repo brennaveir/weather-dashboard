@@ -102,7 +102,7 @@ function createList() {
 }
 
 function getLatAndLong(inputVal) {
-  var weatherContainerEl = document.getElementById('weather-container').style.visibility = "visible" 
+  var mainContainerEl = document.getElementById('main-container').style.visibility = "visible" 
     var searchCity = `https://api.openweathermap.org/data/2.5/weather?q=${inputVal}&appid=248ba8680dc03595a2d2c1b9765a1bdb&units=imperial`;
 
     fetch(searchCity)
