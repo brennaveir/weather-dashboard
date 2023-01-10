@@ -7,4 +7,4 @@ This webpage was designed to allow the user to input a city and receive current 
 ![Weather-dashboard-screenshot](./assets/images/5-day-weather-screenshot.png)
 
 ## Website URL
-
+https://brennaveir.github.io/weather-dashboard/
