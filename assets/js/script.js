@@ -56,28 +56,31 @@ var daySix = {
 }
 
 
-function changeCity(buttonValue) {
+// function changeCity(buttonValue) {
+// var inputVal = buttonValue
 
-    var searchCity = `https://api.openweathermap.org/data/2.5/weather?q=${buttonValue}&appid=248ba8680dc03595a2d2c1b9765a1bdb&units=imperial`;
-    currentCity.textContent = buttonValue;
-    fetch(searchCity)
+// getLatAndLong(inputVal)
+// }
+//     var searchCity = `https://api.openweathermap.org/data/2.5/weather?q=${buttonValue}&appid=248ba8680dc03595a2d2c1b9765a1bdb&units=imperial`;
+//     currentCity.textContent = buttonValue;
+//     fetch(searchCity)
 
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (data) {
-            // console.log(data)
-            long = data.coord.lon
-            lat = data.coord.lat
-            // console.log(long, lat)
-            todayWeather();
-        });
+//         .then(function (response) {
+//             return response.json();
+//         })
+//         .then(function (data) {
+//             console.log(data)
+//             long = data.coord.lon
+//             lat = data.coord.lat
+//             // console.log(long, lat)
+//             todayWeather();
+//         });
 
-}
+// }
 
 
 function createList() {
-    var weatherContainerEl = document.getElementById('weather-container').style.visibility = "visible"
+    
     var inputVal = document.getElementById('city-input').value;
     currentCityText.textContent = inputVal;
 
@@ -99,6 +102,7 @@ function createList() {
 }
 
 function getLatAndLong(inputVal) {
+  var weatherContainerEl = document.getElementById('weather-container').style.visibility = "visible" 
     var searchCity = `https://api.openweathermap.org/data/2.5/weather?q=${inputVal}&appid=248ba8680dc03595a2d2c1b9765a1bdb&units=imperial`;
 
     fetch(searchCity)
@@ -107,7 +111,7 @@ function getLatAndLong(inputVal) {
             return response.json();
         })
         .then(function (data) {
-            console.log(data)
+            // console.log(data)
             long = data.coord.lon
             lat = data.coord.lat
             todayWeather(data)
@@ -183,6 +187,7 @@ function displayFiveDay(day, data) {
     day.temp.textContent = "🌡" + data[3];
     day.wind.textContent = "💦" + data[4];
     day.humidity.textContent = "💨" + data[2];
+    
 }
 
 $(document).ready(function () {
@@ -197,8 +202,8 @@ $(document).ready(function () {
         }
         document.querySelector('#city-list').addEventListener('click', function (event) {
             if (event.target.matches('.city-btn')) {
-                var buttonValue = event.target.textContent;
-                changeCity(buttonValue);
+                var inputVal = event.target.textContent;
+                getLatAndLong(inputVal);
             }
         });
     }
