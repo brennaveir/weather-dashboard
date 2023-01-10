@@ -18,7 +18,7 @@ var icon;
 var cityList = []
 var cityListEl = document.getElementById("city-list")
 var searchBtn = document.getElementById("search-btn")
-// var cityBtn = document.querySelector('a.button')
+var currentCityText = document.getElementById('current-city')
 // var iconEl = document.querySelector('#weather-icon')
 var todayEl = document.getElementById('today')
 var inputVal = document.getElementById('city-input').value
@@ -48,30 +48,22 @@ var dayFiveIcon = document.getElementById('day-5-icon')
 var dayFiveTemp = document.getElementById('day-5-temp')
 var dayFiveHumidity = document.getElementById('day-5-humidity')
 var dayFiveWind = document.getElementById('day-5-wind')
-var days = [
-    { date: todayDate, icon: todayIcon, temp: todayTemp, wind: todayWind, humidity: todayHumidity },
-    { date: tomorrowDate, icon: tomorrowIcon, temp: tomorrowTemp, wind: tomorrowWind, humidity: tomorrowHumidity },
-    { date: dayThreeDate, icon: dayThreeIcon, temp: dayThreeTemp, wind: dayThreeWind, humidity: dayThreeHumidity },
-    { date: dayFourDate, icon: dayFourIcon, temp: dayFourTemp, wind: dayFourWind, humidity: dayFourHumidity },
-    { date: dayFiveDate, icon: dayFiveIcon, temp: dayFiveTemp, wind: dayFiveWind, humidity: dayFiveHumidity }
-]
 
-// function changeCity() {
-//     var cityBtnVal = cityButtons.value
-//     console.log(cityBtnVal)
-//     var searchChangedCity = `http://api.openweathermap.org/geo/1.0/direct?q=${cityBtnVal}&appid=248ba8680dc03595a2d2c1b9765a1bdb`;
+function changeCity(buttonValue) {
+    var searchCity = `http://api.openweathermap.org/geo/1.0/direct?q=${buttonValue}&appid=248ba8680dc03595a2d2c1b9765a1bdb`;
+    currentCity.textContent = buttonValue;
+    fetch(searchCity)
 
-//     fetch(searchChangedCity)
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (data) {
+            long = data[0].lon
+            lat = data[0].lat
+            searchWeather();
+        });
 
-//         .then(function (response) {
-//             return response.json();
-//         })
-//         .then(function (data) {
-//             long = data[0].lon
-//             lat = data[0].lat
-//             searchWeather();
-//         });
-// }
+}
 
 
 function getLatAndLong() {
@@ -90,18 +82,15 @@ function getLatAndLong() {
             createList(inputVal);
         });
 
-
     function createList(inputVal) {
-        var currentCityText = document.getElementById('current-city')
+
         currentCityText.textContent = inputVal;
 
-
-
         if (cityList.includes(inputVal)) {
+            document.getElementById('city-input').value = "";
             searchWeather()
         }
         else {
-
             cityList.push(inputVal);
             localStorage.setItem('cityList', JSON.stringify(cityList))
 
@@ -113,14 +102,6 @@ function getLatAndLong() {
             searchWeather()
         }
     }
-
-
-
-
-
-
-
-
 }
 
 function searchWeather() {
@@ -149,23 +130,29 @@ function searchWeather() {
                     ]
 
                     saveWeatherArr2.push(saveWeatherArr1)
-
                 }
             }
-
-
             displayWeather(saveWeatherArr2)
         })
 
 }
 
 function displayWeather(saveWeatherArr2) {
+    var days = [
+        { date: todayDate, icon: todayIcon, temp: todayTemp, wind: todayWind, humidity: todayHumidity },
+        { date: tomorrowDate, icon: tomorrowIcon, temp: tomorrowTemp, wind: tomorrowWind, humidity: tomorrowHumidity },
+        { date: dayThreeDate, icon: dayThreeIcon, temp: dayThreeTemp, wind: dayThreeWind, humidity: dayThreeHumidity },
+        { date: dayFourDate, icon: dayFourIcon, temp: dayFourTemp, wind: dayFourWind, humidity: dayFourHumidity },
+        { date: dayFiveDate, icon: dayFiveIcon, temp: dayFiveTemp, wind: dayFiveWind, humidity: dayFiveHumidity }
+    ]
+
+
     function updateWeather(day, data) {
         day.date.textContent = data[1];
         day.icon.setAttribute('src', `http://openweathermap.org/img/wn/${data[5]}@2x.png`);
         day.temp.textContent = "🌡" + data[3];
-        day.wind.textContent = "💦" + data[2];
-        day.humidity.textContent = "💨" + data[4];
+        day.wind.textContent = "💦" + data[4];
+        day.humidity.textContent = "💨" + data[2];
     }
 
     for (let i = 0; i < saveWeatherArr2.length; i++) {
@@ -175,15 +162,25 @@ function displayWeather(saveWeatherArr2) {
 
 $(document).ready(function () {
     var getStoredCities = JSON.parse(localStorage.getItem("cityList"));
-    if (getStoredCities != null) {
+    if (getStoredCities) {
+        cityList = getStoredCities;
         for (var i = 0; i < getStoredCities.length; i++) {
             var cityItems = document.createElement("button");
             cityItems.textContent = getStoredCities[i];
             cityItems.classList.add("city-btn");
             cityListEl.appendChild(cityItems)
-
         }
+        document.querySelector('#city-list').addEventListener('click', function (event) {
+            if (event.target.matches('.city-btn')) {
+                var buttonValue = event.target.textContent;
+                changeCity(buttonValue);
+            }
+        });
 
     }
+
+
+
+
     searchBtn.addEventListener('click', getLatAndLong)
 })
