@@ -19,35 +19,45 @@ var cityList = []
 var cityListEl = document.getElementById("city-list")
 var searchBtn = document.getElementById("search-btn")
 var currentCityText = document.getElementById('current-city')
-// var iconEl = document.querySelector('#weather-icon')
-var todayEl = document.getElementById('today')
 var inputVal = document.getElementById('city-input').value
 var currentCity = document.getElementById('current-city')
-var todayDate = document.getElementById('today-date')
-var todayIcon = document.getElementById('today-icon')
-var todayTemp = document.getElementById('today-temp')
-var todayHumidity = document.getElementById('today-humidity')
-var todayWind = document.getElementById('today-wind')
-var tomorrowDate = document.getElementById('tomorrow-date')
-var tomorrowIcon = document.getElementById('tomorrow-icon')
-var tomorrowTemp = document.getElementById('tomorrow-temp')
-var tomorrowHumidity = document.getElementById('tomorrow-humidity')
-var tomorrowWind = document.getElementById('tomorrow-wind')
-var dayThreeDate = document.getElementById('day-3-date')
-var dayThreeIcon = document.getElementById('day-3-icon')
-var dayThreeTemp = document.getElementById('day-3-temp')
-var dayThreeHumidity = document.getElementById('day-3-humidity')
-var dayThreeWind = document.getElementById('day-3-wind')
-var dayFourDate = document.getElementById('day-4-date')
-var dayFourIcon = document.getElementById('day-4-icon')
-var dayFourTemp = document.getElementById('day-4-temp')
-var dayFourHumidity = document.getElementById('day-4-humidity')
-var dayFourWind = document.getElementById('day-4-wind')
-var dayFiveDate = document.getElementById('day-5-date')
-var dayFiveIcon = document.getElementById('day-5-icon')
-var dayFiveTemp = document.getElementById('day-5-temp')
-var dayFiveHumidity = document.getElementById('day-5-humidity')
-var dayFiveWind = document.getElementById('day-5-wind')
+
+var today = {
+    date: document.getElementById('today-date'),
+    icon: document.getElementById('today-icon'),
+    temp: document.getElementById('today-temp'),
+    humidity: document.getElementById('today-humidity'),
+    wind: document.getElementById('today-wind')
+}
+var tomorrow = {
+    date: document.getElementById('tomorrow-date'),
+    icon: document.getElementById('tomorrow-icon'),
+    temp: document.getElementById('tomorrow-temp'),
+    humidity: document.getElementById('tomorrow-humidity'),
+    wind: document.getElementById('tomorrow-wind')
+}
+var dayThree = {
+    date: document.getElementById('day-3-date'),
+    icon: document.getElementById('day-3-icon'),
+    temp: document.getElementById('day-3-temp'),
+    humidity: document.getElementById('day-3-humidity'),
+    wind: document.getElementById('day-3-wind')
+}
+var dayFour = {
+    date: document.getElementById('day-4-date'),
+    icon: document.getElementById('day-4-icon'),
+    temp: document.getElementById('day-4-temp'),
+    humidity: document.getElementById('day-4-humidity'),
+    wind: document.getElementById('day-4-wind')
+}
+var dayFive = {
+    date: document.getElementById('day-5-date'),
+    icon: document.getElementById('day-5-icon'),
+    temp: document.getElementById('day-5-temp'),
+    humidity: document.getElementById('day-5-humidity'),
+    wind: document.getElementById('day-5-wind')
+}
+
 
 function changeCity(buttonValue) {
     var searchCity = `http://api.openweathermap.org/geo/1.0/direct?q=${buttonValue}&appid=248ba8680dc03595a2d2c1b9765a1bdb`;
@@ -60,11 +70,10 @@ function changeCity(buttonValue) {
         .then(function (data) {
             long = data[0].lon
             lat = data[0].lat
-            searchWeather();
+            searchWeather(long,lat);
         });
 
 }
-
 
 function getLatAndLong() {
 
@@ -104,7 +113,7 @@ function getLatAndLong() {
     }
 }
 
-function searchWeather() {
+function searchWeather(long,lat) {
 
     var longAndLatURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${long}&appid=248ba8680dc03595a2d2c1b9765a1bdb`
     var saveWeatherArr2 = []
@@ -116,7 +125,8 @@ function searchWeather() {
         })
         .then(function (data) {
             console.log(data);
-            var name = data.city.name
+            var name = data.city.name;
+            currentCity.textContent = name;
             for (var i = 0; i < data.list.length; i++) {
                 if (i % 8 == 0) {
 
@@ -139,28 +149,43 @@ function searchWeather() {
 
 function displayWeather(saveWeatherArr2) {
     var days = [
-        { date: todayDate, icon: todayIcon, temp: todayTemp, wind: todayWind, humidity: todayHumidity },
-        { date: tomorrowDate, icon: tomorrowIcon, temp: tomorrowTemp, wind: tomorrowWind, humidity: tomorrowHumidity },
-        { date: dayThreeDate, icon: dayThreeIcon, temp: dayThreeTemp, wind: dayThreeWind, humidity: dayThreeHumidity },
-        { date: dayFourDate, icon: dayFourIcon, temp: dayFourTemp, wind: dayFourWind, humidity: dayFourHumidity },
-        { date: dayFiveDate, icon: dayFiveIcon, temp: dayFiveTemp, wind: dayFiveWind, humidity: dayFiveHumidity }
+        { date: today.date, icon: today.icon, temp: today.temp, wind: today.wind, humidity: today.humidity },
+        { date: tomorrow.date, icon: tomorrow.icon, temp: tomorrow.temp, wind: tomorrow.wind, humidity: tomorrow.humidity },
+        { date: dayThree.date, icon: dayThree.icon, temp: dayThree.temp, wind: dayThree.wind, humidity: dayThree.humidity },
+        { date: dayFour.date, icon: dayFour.icon, temp: dayFour.temp, wind: dayFour.wind, humidity: dayFour.humidity},
+        { date: dayFive.date, icon: dayFive.icon, temp: dayFive.temp, wind: dayFive.wind, humidity: dayFive.humidity}
     ]
-
-
-    function updateWeather(day, data) {
-        day.date.textContent = data[1];
-        day.icon.setAttribute('src', `http://openweathermap.org/img/wn/${data[5]}@2x.png`);
-        day.temp.textContent = "🌡" + data[3];
-        day.wind.textContent = "💦" + data[4];
-        day.humidity.textContent = "💨" + data[2];
-    }
 
     for (let i = 0; i < saveWeatherArr2.length; i++) {
         updateWeather(days[i], saveWeatherArr2[i]);
     }
 }
 
+function updateWeather(day, data) {
+    day.date.textContent = data[1];
+    day.icon.setAttribute('src', `http://openweathermap.org/img/wn/${data[5]}@2x.png`);
+    day.temp.textContent = "🌡" + data[3];
+    day.wind.textContent = "💦" + data[4];
+    day.humidity.textContent = "💨" + data[2];
+}
+
+
 $(document).ready(function () {
+    const successCallback = (position) => {
+        console.log(position);
+        long = position.coords.longitude
+        lat = position.coords.latitude
+        
+        searchWeather(long,lat)
+      };
+      
+      const errorCallback = (error) => {
+        console.log(error);
+      };
+      
+      navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+    
+    
     var getStoredCities = JSON.parse(localStorage.getItem("cityList"));
     if (getStoredCities) {
         cityList = getStoredCities;
@@ -176,11 +201,6 @@ $(document).ready(function () {
                 changeCity(buttonValue);
             }
         });
-
     }
-
-
-
-
     searchBtn.addEventListener('click', getLatAndLong)
 })
