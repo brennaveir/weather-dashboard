@@ -191,6 +191,13 @@ function displayFiveDay(day, data) {
 }
 
 $(document).ready(function () {
+  document.querySelector('#city-list').addEventListener('click', function (event) {
+            if (event.target.matches('.city-btn')) {
+                var inputVal = event.target.textContent;
+                getLatAndLong(inputVal);
+            }
+        });   
+    
     var getStoredCities = JSON.parse(localStorage.getItem("cityList"));
     if (getStoredCities) {
         cityList = getStoredCities;
@@ -202,12 +209,7 @@ $(document).ready(function () {
             var inputVal = getStoredCities[getStoredCities.length-1]
             getLatAndLong(inputVal)
         }
-        document.querySelector('#city-list').addEventListener('click', function (event) {
-            if (event.target.matches('.city-btn')) {
-                var inputVal = event.target.textContent;
-                getLatAndLong(inputVal);
-            }
-        });
+       
     }
     searchBtn.addEventListener('click', createList)
 })
